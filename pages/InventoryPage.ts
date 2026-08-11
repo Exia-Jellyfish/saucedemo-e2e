@@ -85,4 +85,21 @@ export class InventoryPage {
       parseFloat(price.replace('$', ''))
     );
   }
+
+  async addProductToCart(productName: string) {
+    const product = this.products.filter({ hasText: productName });
+
+    await product.getByRole('button', { name: /add to cart/i }).click();
+  }
+
+  async expectCartItemCount(count: number) {
+    const cartBadge = this.page.locator('.shopping_cart_badge');
+
+    if (count === 0) {
+        await expect(cartBadge).not.toBeVisible();
+    } else {
+        await expect(cartBadge).toHaveText(count.toString());
+    }
+  }
+
 }
