@@ -60,5 +60,32 @@ test.describe('Catalogue produits SauceDemo', () => {
     expect(prices).toEqual(sortedPrices);
   });
 
+  test('PROD-006 - Tri des produits par nom A-Z', async ({ inventoryPage }) => {
+
+    await inventoryPage.sortBy('az');
+
+    const names = await inventoryPage.getProductNames();
+
+    const sortedNames = [...names].sort((a, b) =>
+        a.localeCompare(b)
+    );
+
+    expect(names).toEqual(sortedNames);
+});
+
+  test('PROD-007 - Tri des produits par nom Z-A', async ({ inventoryPage }) => {
+
+    await inventoryPage.sortBy('za');
+
+    const names = await inventoryPage.getProductNames();
+
+    const sortedNames = [...names].sort((a, b) =>
+        b.localeCompare(a)
+    );
+
+    expect(names).toEqual(sortedNames);
+});
+
+
 });
 
