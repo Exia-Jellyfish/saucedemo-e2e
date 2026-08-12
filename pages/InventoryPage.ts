@@ -102,4 +102,9 @@ export class InventoryPage {
     }
   }
 
+  async addProductsToCart(productNames: string[]) {
+    for (const productName of productNames) {
+      await this.addProductToCart(productName);
+    }
+  }
 }

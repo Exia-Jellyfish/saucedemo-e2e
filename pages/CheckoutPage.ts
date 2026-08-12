@@ -170,4 +170,14 @@ export class CheckoutPage {
       this.page.getByText('Your order has been dispatched')
     ).toBeVisible();
   }
+
+  async cancel() {
+    await this.cancelButton.click();
+  }
+
+  async backHome() {
+    await this.page.getByRole('button', {
+        name: 'Back Home'
+    }).click();
+  }
 }
