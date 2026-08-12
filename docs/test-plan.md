@@ -2,7 +2,7 @@
 
 ## 1. Objectif
 
-Réalisation de tests automatisés sur une plateforme de e-commerce en ligne Saucedemo.
+Réalisation de tests automatisés sur une plateforme de e-commerce en ligne (Saucedemo).
 L'objectif est de réaliser des tests automatisés de bout en bout.
 
 ## 2. Périmètre

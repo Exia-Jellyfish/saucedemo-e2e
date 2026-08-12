@@ -71,7 +71,7 @@ test.describe('Catalogue produits SauceDemo', () => {
     );
 
     expect(names).toEqual(sortedNames);
-});
+  });
 
   test('PROD-007 - Tri des produits par nom Z-A', async ({ inventoryPage }) => {
 
@@ -84,8 +84,7 @@ test.describe('Catalogue produits SauceDemo', () => {
     );
 
     expect(names).toEqual(sortedNames);
-});
-
+  });
 
 });
 
