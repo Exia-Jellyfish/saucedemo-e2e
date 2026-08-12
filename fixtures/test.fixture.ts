@@ -2,12 +2,14 @@ import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
 import { users } from '../data/users';
 
 type TestFixtures = {
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
   cartPage: CartPage;
+  checkoutPage: CheckoutPage;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -42,7 +44,12 @@ export const test = base.extend<TestFixtures>({
 
     await use(cartPage);
   },
+
+  checkoutPage: async ({ page }, use) => {
+    const checkoutPage = new CheckoutPage(page);
+
+    await use(checkoutPage);
+  },
 });
 
 export { expect } from '@playwright/test';
-
