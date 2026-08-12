@@ -3,7 +3,7 @@ import { products } from '../data/products';
 
 test.describe('Panier SauceDemo', () => {
 
-  test('CART-001 - Ajouter un produit au panier', async ({
+  test('CART-001 - Ajouter un produit au panier @smoke', async ({
     inventoryPage,
     cartPage
   }) => {
@@ -167,7 +167,7 @@ test.describe('Panier SauceDemo', () => {
   });
 
 
-  test('CART-008 - Accès au checkout', async ({
+  test('CART-008 - Accès au checkout @smoke', async ({
     inventoryPage,
     cartPage
   }) => {

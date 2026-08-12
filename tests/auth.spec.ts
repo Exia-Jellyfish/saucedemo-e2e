@@ -4,7 +4,7 @@ import { users } from '../data/users';
 
 test.describe('Authentification SauceDemo', () => {
 
-  test('AUTH-001 - Connexion avec identifiants valides', async ({ loginPage }) => {
+  test('AUTH-001 - Connexion avec identifiants valides @smoke', async ({ loginPage }) => {
 
     await loginPage.expectLoginPageVisible();
 

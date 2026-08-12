@@ -92,7 +92,7 @@ test.describe('Checkout SauceDemo', () => {
     );
   });
 
-  test('CHECKOUT-005 - Code postal obligatoire', async ({
+  test('CHECKOUT-005 - Code postal vide', async ({
     inventoryPage,
     cartPage,
     checkoutPage
@@ -157,8 +157,8 @@ test.describe('Checkout SauceDemo', () => {
     );
   });
 
-  
-  test('CHECKOUT-007 - Finalisation de la commande', async ({
+
+  test('CHECKOUT-007 - Finalisation de la commande @smoke', async ({
     inventoryPage,
     cartPage,
     checkoutPage
@@ -208,7 +208,7 @@ test.describe('Checkout SauceDemo', () => {
     }
   });
 
-  test('CHECKOUT-009 - Vérification du calcul avec plusieurs produits', async ({
+  test('CHECKOUT-009 - Calcul du total avec plusieurs produits', async ({
     inventoryPage,
     cartPage,
     checkoutPage
@@ -273,7 +273,7 @@ test.describe('Checkout SauceDemo', () => {
     );
   });
 
-  test('CHECKOUT-011 - Accès au checkout avec panier vide', async ({
+  test('CHECKOUT-011 - Checkout avec panier vide', async ({
     inventoryPage,
     cartPage
   }) => {

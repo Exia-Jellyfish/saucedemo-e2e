@@ -3,7 +3,7 @@ import { products } from '../data/products';
 
 test.describe('Catalogue produits SauceDemo', () => {
 
-  test('PROD-001 - Affichage du catalogue', async ({ inventoryPage }) => {
+  test('PROD-001 - Affichage du catalogue @smoke', async ({ inventoryPage }) => {
 
     await inventoryPage.expectInventoryPageVisible();
 
