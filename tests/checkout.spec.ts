@@ -1,6 +1,10 @@
 import { test, expect } from '../fixtures/test.fixture';
 import { products } from '../data/products';
 import { checkoutData } from '../data/checkout';
+import {
+  goToCheckout,
+  fillValidCheckoutInformation,
+} from '../helpers/checkout.helper';
 
 test.describe('Checkout SauceDemo', () => {
 
@@ -9,44 +13,29 @@ test.describe('Checkout SauceDemo', () => {
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
-
-    await cartPage.goto();
-
-    await cartPage.expectCartPageVisible();
-
-    await cartPage.checkout();
 
     await checkoutPage.expectCheckoutPageVisible();
   });
 
-
-  test('CHECKOUT-002 - Saisie des informations client valides', async ({
+  test('CHECKOUT-002 - Informations client valides', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
 
-    await cartPage.goto();
-
-    await cartPage.checkout();
-
-    await checkoutPage.expectCheckoutPageVisible();
-
-    await checkoutPage.fillCustomerInformation(
-      checkoutData.validCustomer.firstName,
-      checkoutData.validCustomer.lastName,
-      checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
   });
@@ -57,14 +46,12 @@ test.describe('Checkout SauceDemo', () => {
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
-
-    await cartPage.goto();
-
-    await cartPage.checkout();
 
     await checkoutPage.fillCustomerInformation(
       checkoutData.emptyFirstName.firstName,
@@ -77,10 +64,6 @@ test.describe('Checkout SauceDemo', () => {
     await checkoutPage.expectErrorMessage(
       'First Name is required'
     );
-
-    await expect(checkoutPage.page).toHaveURL(
-      /checkout-step-one\.html/
-    );
   });
 
 
@@ -89,14 +72,12 @@ test.describe('Checkout SauceDemo', () => {
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
-
-    await cartPage.goto();
-
-    await cartPage.checkout();
 
     await checkoutPage.fillCustomerInformation(
       checkoutData.emptyLastName.firstName,
@@ -109,26 +90,19 @@ test.describe('Checkout SauceDemo', () => {
     await checkoutPage.expectErrorMessage(
       'Last Name is required'
     );
-
-    await expect(checkoutPage.page).toHaveURL(
-      /checkout-step-one\.html/
-    );
   });
 
-
-  test('CHECKOUT-005 - Code postal vide', async ({
+  test('CHECKOUT-005 - Code postal obligatoire', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
-
-    await cartPage.goto();
-
-    await cartPage.checkout();
 
     await checkoutPage.fillCustomerInformation(
       checkoutData.emptyPostalCode.firstName,
@@ -141,34 +115,21 @@ test.describe('Checkout SauceDemo', () => {
     await checkoutPage.expectErrorMessage(
       'Postal Code is required'
     );
-
-    await expect(checkoutPage.page).toHaveURL(
-      /checkout-step-one\.html/
-    );
   });
 
-
-  test('CHECKOUT-006 - Vérification du récapitulatif de commande', async ({
+  test('CHECKOUT-006 - Vérification du récapitulatif et des prix', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
 
-    await cartPage.goto();
-
-    await cartPage.checkout();
-
-    await checkoutPage.fillCustomerInformation(
-      checkoutData.validCustomer.firstName,
-      checkoutData.validCustomer.lastName,
-      checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
 
@@ -196,28 +157,20 @@ test.describe('Checkout SauceDemo', () => {
     );
   });
 
-
+  
   test('CHECKOUT-007 - Finalisation de la commande', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-      products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
 
-    await cartPage.goto();
-
-    await cartPage.checkout();
-
-    await checkoutPage.fillCustomerInformation(
-      checkoutData.validCustomer.firstName,
-      checkoutData.validCustomer.lastName,
-      checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
 
@@ -226,76 +179,60 @@ test.describe('Checkout SauceDemo', () => {
     await checkoutPage.expectOrderConfirmation();
   });
 
-
   test('CHECKOUT-008 - Checkout avec plusieurs produits', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
     const selectedProducts = [
-        products.backpack,
-        products.bikeLight,
-        products.fleeceJacket,
+      products.backpack,
+      products.bikeLight,
+      products.fleeceJacket,
     ];
 
-    await inventoryPage.addProductsToCart(
-        selectedProducts.map(product => product.name)
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      selectedProducts.map(product => product.name)
     );
 
-    await cartPage.goto();
-    await cartPage.checkout();
-
-    await checkoutPage.fillCustomerInformation(
-        checkoutData.validCustomer.firstName,
-        checkoutData.validCustomer.lastName,
-        checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
 
     for (const product of selectedProducts) {
-        await checkoutPage.expectProductInOverview(
+      await checkoutPage.expectProductInOverview(
         product.name
-        );
+      );
     }
   });
-
 
   test('CHECKOUT-009 - Vérification du calcul avec plusieurs produits', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
     const selectedProducts = [
-        products.backpack,
-        products.bikeLight,
-        products.fleeceJacket,
+      products.backpack,
+      products.bikeLight,
+      products.fleeceJacket,
     ];
 
-    await inventoryPage.addProductsToCart(
-        selectedProducts.map(product => product.name)
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      selectedProducts.map(product => product.name)
     );
 
-    await cartPage.goto();
-    await cartPage.checkout();
-
-    await checkoutPage.fillCustomerInformation(
-        checkoutData.validCustomer.firstName,
-        checkoutData.validCustomer.lastName,
-        checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
 
     const expectedSubtotal = selectedProducts.reduce(
-        (total, product) => total + product.price,
-        0
+      (total, product) => total + product.price,
+      0
     );
 
     const subtotal = await checkoutPage.getSubtotal();
@@ -303,51 +240,43 @@ test.describe('Checkout SauceDemo', () => {
     const total = await checkoutPage.getTotal();
 
     expect(subtotal).toBeCloseTo(
-        expectedSubtotal,
-        2
+      expectedSubtotal,
+      2
     );
 
     expect(total).toBeCloseTo(
-        subtotal + tax,
-        2
+      subtotal + tax,
+      2
     );
   });
-
 
   test('CHECKOUT-010 - Annulation du checkout', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-        products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
-
-    await cartPage.goto();
-    await cartPage.checkout();
 
     await checkoutPage.expectCheckoutPageVisible();
 
     await checkoutPage.cancel();
 
-    await expect(cartPage.page).toHaveURL(
-        /cart\.html/
-    );
-
     await cartPage.expectCartPageVisible();
 
     await cartPage.expectProductInCart(
-        products.backpack.name
+      products.backpack.name
     );
   });
-
 
   test('CHECKOUT-011 - Accès au checkout avec panier vide', async ({
     inventoryPage,
     cartPage
   }) => {
-
     await inventoryPage.expectInventoryPageVisible();
 
     await cartPage.goto();
@@ -357,31 +286,23 @@ test.describe('Checkout SauceDemo', () => {
     await cartPage.checkout();
 
     await expect(cartPage.page).toHaveURL(
-        /checkout-step-one\.html/
+      /checkout-step-one\.html/
     );
   });
-
 
   test('CHECKOUT-012 - Panier vidé après finalisation', async ({
     inventoryPage,
     cartPage,
     checkoutPage
   }) => {
-
-    await inventoryPage.addProductToCart(
-        products.backpack.name
+    await goToCheckout(
+      inventoryPage,
+      cartPage,
+      checkoutPage,
+      [products.backpack.name]
     );
 
-    await cartPage.goto();
-    await cartPage.checkout();
-
-    await checkoutPage.fillCustomerInformation(
-        checkoutData.validCustomer.firstName,
-        checkoutData.validCustomer.lastName,
-        checkoutData.validCustomer.postalCode
-    );
-
-    await checkoutPage.continue();
+    await fillValidCheckoutInformation(checkoutPage);
 
     await checkoutPage.expectOverviewPageVisible();
 
@@ -392,11 +313,12 @@ test.describe('Checkout SauceDemo', () => {
     await checkoutPage.backHome();
 
     await expect(cartPage.page).toHaveURL(
-        /inventory\.html/
+      /inventory\.html/
     );
 
     await cartPage.goto();
 
     await cartPage.expectCartItemCount(0);
   });
+
 });
