@@ -1,6 +1,6 @@
 export const checkoutData = {
   validCustomer: {
-    firstName: 'test',
+    firstName: 'standard',
     lastName: 'user',
     postalCode: '69000',
   },
@@ -12,13 +12,13 @@ export const checkoutData = {
   },
 
   emptyLastName: {
-    firstName: 'test',
+    firstName: 'standard',
     lastName: '',
     postalCode: '69000',
   },
 
   emptyPostalCode: {
-    firstName: 'test',
+    firstName: 'standard',
     lastName: 'user',
     postalCode: '',
   },
