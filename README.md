@@ -11,6 +11,7 @@ Suite de tests End-to-End automatisés de SauceDemo développée avec Playwright
 
 ## Structure du projet
 
+```text
 saucedemo-e2e/
 ├── data/  
 ├── docs/
@@ -22,6 +23,7 @@ saucedemo-e2e/
 ├── playwright.config.ts
 ├── package.json
 └── README.md
+```
 
 ## Exécution des tests
 
